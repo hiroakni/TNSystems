@@ -1,0 +1,52 @@
+﻿@model IEnumerable<TodoApp.Models.Todo>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+<!-- あそび -->
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 text-center">　</div>
+    <div class="col-md-4"></div>
+</div>
+
+<h2>登録情報一覧</h2>
+<p>
+    @Html.ActionLink("登録(Click)", "Create")
+</p>
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Detail)
+        </th>
+        <th>
+            CRUD
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Detail)
+            </td>
+            <td>
+                @Html.ActionLink("編集", "Edit", new { id = item.Id }) <br>
+                @Html.ActionLink("詳細", "Details", new { id = item.Id }) <br>
+                @Html.ActionLink("削除", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>
