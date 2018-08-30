@@ -12,5 +12,6 @@ namespace TodoApp.Models
         [Required]
         [DisplayName("パスワード")]
         public string Password { get; set; }
+
     }
 }

@@ -28,7 +28,7 @@ namespace TodoApp.Controllers
                     return RedirectToAction("Index", "Home");
                 }
             }
-            ViewBag.Message = "ログインに失敗しました。";
+            ViewBag.Message = "ログイン失敗。IDまたはPasswordが違います。";
             return View(model);
         }
 

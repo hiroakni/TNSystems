@@ -4,6 +4,7 @@
     ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
+
 <!-- あそび -->
 <div class="row">
     <div class="col-md-4"></div>
@@ -13,7 +14,6 @@
 
 <h2>削除</h2>
 
-<h6>消す?</h6>
 <div>
     <h4>登録情報</h4>
     <hr />
@@ -42,15 +42,38 @@
                 @Html.DisplayFor(model => model.Done)
             </dd>
         -->
-        </dl>
+    </dl>
 
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-
-            <div class="form-actions no-color">
-                <input type="submit" value="削除" class="btn btn-danger" /> |
-                @Html.ActionLink("登録情報一覧に戻る", "Index")
-            </div>
-        }
+    <div class="form-actions no-color">
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Modal">
+            削除
+        </button>
+        <a href='@Url.Action("Index")' class="btn btn-secondary">一覧画面に戻る</a>
     </div>
+    <!-- モーダルダイアログ -->
+    <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title" id="demoModalTitle">
+                        メッセージの削除
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    削除しますか？
+                </div>
+                <div class="modal-footer">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                        <input type="submit" value="削除" class="btn btn-danger" />
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

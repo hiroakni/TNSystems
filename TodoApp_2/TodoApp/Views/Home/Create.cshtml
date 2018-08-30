@@ -32,7 +32,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Detail, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextAreaFor(model => model.Detail, new { @class = "form-control" })
+            @Html.TextAreaFor(model => model.Detail,5,500, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.Detail, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -56,5 +56,5 @@
 }
 
 <div>
-    @Html.ActionLink("登録情報一覧に戻る", "Index")
+    <a href='@Url.Action("Index")' class="btn btn-secondary">一覧画面に戻る</a>
 </div>
