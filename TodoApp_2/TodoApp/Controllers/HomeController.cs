@@ -50,7 +50,7 @@ namespace TodoApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Detail,Done")] Todo todo)
+        public ActionResult Create([Bind(Include = "Id,Title,Detail,Pass")] Todo todo)
         {
             if (ModelState.IsValid)
             {
@@ -89,12 +89,31 @@ namespace TodoApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Detail,Done")] Todo todo)
+        public ActionResult Edit([Bind(Include = "Id,Title,Detail,Pass")] Todo todo)
         {
             if (ModelState.IsValid)
             {
+                // Passwordの入力チェックを実施する
+                using (var db = new AppContext())
+                {
+                    // 対象となるデータの情報をDBから取得する
+                    var user = db.Todoes.Find(todo.Id);
+
+                    var password = db.Todoes
+                        .Where(u => user.Pass == todo.Pass && user.Id == todo.Id)
+                        .FirstOrDefault();
+
+                    if (password == null)
+                    {
+                        // 認証NG
+                        ViewBag.errMessage = "パスワードが違います。";
+                        return View(todo);
+                    }
+                }
+
                 db.Entry(todo).State = EntityState.Modified;
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
             return View(todo);
@@ -118,12 +137,34 @@ namespace TodoApp.Controllers
         // POST: Home/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed([Bind(Include = "Id,Title,Detail,Pass")] Todo todo)
         {
-            Todo todo = db.Todoes.Find(id);
-            db.Todoes.Remove(todo);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            var userDetail = db.Todoes.Find(todo.Id);
+            if (ModelState.IsValid)
+            {
+                // Passwordの入力チェックを実施する
+                using (var db = new AppContext())
+                {
+                    // 対象となるデータの情報をDBから取得する
+                    var user = db.Todoes.Find(todo.Id);
+
+                    var password = db.Todoes
+                        .Where(u => user.Pass == todo.Pass && user.Id == todo.Id)
+                        .FirstOrDefault();
+
+                    if (password == null)
+                    {
+                        // 認証NG
+                        ViewBag.errMessage = "パスワードが違います。";
+                        return View(userDetail);
+                    }
+                }
+
+                db.Todoes.Remove(userDetail);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(todo);
         }
 
         protected override void Dispose(bool disposing)
