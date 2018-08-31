@@ -1,0 +1,24 @@
+﻿@{
+    int userId = (int)Session["AuthUserId"];
+    string[] roles = new string[] { };
+    using (var db = new TodoApp.Models.AppContext())
+    {
+        var user = db.Users.Where(u => u.Id == userId).FirstOrDefault();
+        if (user != null)
+        {
+            roles = user.Roles.Select(r => r.RoleName).ToArray();
+        }
+    }
+}
+<nav class="navbar fixed-top navbar-light bg-dark">
+    <a class="navbar-nav" href="#">#</a>
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("登録情報一覧", "Index", "Home")</li>
+        @if (roles.Contains("Administrators"))
+        {
+            <li>@Html.ActionLink("ユーザ", "Index", "Users")</li>
+        }
+        <li>@Html.ActionLink("ログアウト", "SignOut", "Login")</li>
+    </ul>
+</nav>
+
