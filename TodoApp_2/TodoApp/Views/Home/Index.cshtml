@@ -6,7 +6,7 @@
 }
 
 <h2>登録情報一覧</h2>
-<a href='@Url.Action("Create", "Home")' class="btn btn-success">新規登録</a>
+<a href='@Url.Action("Create", "Home")' class="btn btn-primary">新規登録</a>
 <!-- あそび -->
 <div class="row">
     <div class="col-md-4"></div>
@@ -37,11 +37,14 @@
                 @Html.DisplayFor(modelItem => item.Title)
 
             <td>
-                <p>@Html.DisplayFor(modelItem => item.Detail)</p>
+                <p>
+                    <a href='@Url.Action("Details", "Home",new { id = item.Id })'>
+                        @Html.DisplayFor(modelItem => item.Detail)
+                    </a>
+                </p>
             </td>
             <td>
                 <div>
-                    <a href='@Url.Action("Details", "Home",new { id = item.Id })' class="btn btn-primary">詳細</a>
                     <a href='@Url.Action("Edit", "Home",new { id = item.Id })' class="btn btn-warning">編集</a>
                     <a href='@Url.Action("Delete", "Home",new { id = item.Id })' class="btn btn-danger">削除</a>
                 </div>

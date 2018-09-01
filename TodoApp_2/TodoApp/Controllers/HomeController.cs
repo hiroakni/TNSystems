@@ -36,6 +36,10 @@ namespace TodoApp.Controllers
             {
                 return HttpNotFound();
             }
+            // 改行コードを画面表示用に置き換える
+            string text = todo.Detail.Replace("\r\n","<br>");
+            ViewBag.viewDetailTxt = text;
+
             return View(todo);
         }
 

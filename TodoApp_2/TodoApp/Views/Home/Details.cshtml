@@ -24,7 +24,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Detail)
+            @Html.Raw(ViewBag.viewDetailTxt)
         </dd>
 
         <!-- チェックボックスはとりま非活性
@@ -38,7 +38,7 @@
         -->
         </dl>
     </div>
-    <p>
+    <div>
         <a href='@Url.Action("Edit", "Home",new { id = Model.Id })' class="btn btn-warning">編集</a>
         <a href='@Url.Action("Index")' class="btn btn-secondary">一覧画面に戻る</a>
-    </p>
+    </div>
